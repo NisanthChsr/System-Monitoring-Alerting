@@ -1,8 +1,8 @@
 package com.monitoring.system_monitor.producer;
 
-import com.monitoring.system_monitor.entity.SystemMetrics;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import com.monitoring.shared_resource.shared.SystemMetrics;
 
 @Service
 public class SystemMetricsProducer {

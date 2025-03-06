@@ -1,10 +1,10 @@
 package com.monitoring.system_monitor.controller;
 
-import com.monitoring.system_monitor.entity.SystemMetrics;
 import com.monitoring.system_monitor.service.SystemMetricsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.monitoring.shared_resource.shared.SystemMetrics;
 
 @RestController
 @RequestMapping("/metrics")

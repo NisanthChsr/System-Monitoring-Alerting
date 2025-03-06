@@ -35,7 +35,8 @@ services:
 
   system-monitor:
     build:
-      context: ./system-monitor
+      context: .
+      dockerfile: system-monitor/Dockerfile
     ports:
       - "8080:8080"
     environment:
@@ -46,14 +47,16 @@ services:
 
   log-storing:
     build:
-      context: ./log-storing
+      context: .
+      dockerfile: log-storing/Dockerfile
     ports:
       - "8081:8081"
     environment:
       SPRING_PROFILES_ACTIVE: docker
       KAFKA_BOOTSTRAP_SERVERS: kafka:9093
       SPRING_ELASTICSEARCH_SSL_VERIFICATION_MODE: none
-      SPRING_ELASTICSEARCH_URIS: elasticsearch:9200
+      SPRING_ELASTICSEARCH_URIS: http://elasticsearch:9200
     depends_on:
+      - system-monitor
       - kafka
       - elasticsearch

@@ -1,6 +1,6 @@
 package com.monitoring.system_monitor.service;
 
-import com.monitoring.system_monitor.entity.SystemMetrics;
+import com.monitoring.shared_resource.shared.SystemMetrics;
 import com.monitoring.system_monitor.producer.SystemMetricsProducer;
 import org.springframework.scheduling.annotation.Scheduled;
 import oshi.SystemInfo;
@@ -20,7 +20,7 @@ public class SystemMetricsService {
     public SystemMetricsService(SystemMetricsProducer metricsProducer) {
         this.metricsProducer = metricsProducer;
     }
-    @Scheduled(fixedRate = 5000000) // Every 5 seconds
+    @Scheduled(fixedRate = 10000) // Every 5 seconds
     public void collectAndSendMetrics() {
         CentralProcessor processor = systemInfo.getHardware().getProcessor();
         GlobalMemory memory = systemInfo.getHardware().getMemory();
