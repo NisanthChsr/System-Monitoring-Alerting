@@ -1,6 +1,7 @@
 package com.monitoring.log_storing.consumer;
 
-import com.monitoring.log_storing.entity.SystemMetrics;
+import com.monitoring.log_storing.entity.SystemMetricsDocument;
+import com.monitoring.shared_resource.shared.SystemMetrics;
 import com.monitoring.log_storing.repository.LogStorageRepository;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
-import java.util.UUID;
 
 @Service
 public class KafkaConsumerService {
@@ -54,11 +54,9 @@ public class KafkaConsumerService {
         ConsumerRecords<String, SystemMetrics> records = consumer.poll(Duration.ofSeconds(1));
         for (ConsumerRecord<String, SystemMetrics> record : records) {
             SystemMetrics systemMetrics = record.value();
-            if (systemMetrics.getId() == null || systemMetrics.getId().isEmpty()) {
-                systemMetrics.setId(UUID.randomUUID().toString());
-            }
             logger.info("📥 Received Metrics: " + systemMetrics);
-            logStorageRepository.save(systemMetrics);
+            SystemMetricsDocument doc = SystemMetricsDocument.from(systemMetrics);
+            logStorageRepository.save(doc);
         }
         consumer.commitSync();
     }

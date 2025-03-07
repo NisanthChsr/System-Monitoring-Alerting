@@ -1,6 +1,6 @@
 package com.monitoring.log_storing;
 
-import com.monitoring.log_storing.entity.SystemMetrics;
+import com.monitoring.log_storing.entity.SystemMetricsDocument;
 import com.monitoring.log_storing.repository.LogStorageRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +16,8 @@ public class LogService {
         this.logStorageRepository = logStorageRepository;
     }
 
-    public List<SystemMetrics> findAll() {
-        Iterable<SystemMetrics> iterable = logStorageRepository.findAll();
+    public List<SystemMetricsDocument> findAll() {
+        Iterable<SystemMetricsDocument> iterable = logStorageRepository.findAll();
         return StreamSupport.stream(iterable.spliterator(), false)
                 .collect(Collectors.toList());
     }

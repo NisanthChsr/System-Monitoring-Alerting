@@ -1,20 +1,16 @@
 package com.monitoring.log_storing.entity;
 
+import com.monitoring.shared_resource.shared.SystemMetrics;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "metrics")
-public class SystemMetrics {
+@Document(indexName = "system-metrics")
+public class SystemMetricsDocument {
+
     @Id
     private String id;
-    private String timestamp;
-    private String server;
-    private double cpuUsage;
-    private double memoryUsage;
-    private double diskUsage;
 
-    public SystemMetrics() {
-    }
+    private String timestamp;
 
     public String getId() {
         return id;
@@ -22,6 +18,9 @@ public class SystemMetrics {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public SystemMetricsDocument() {
     }
 
     public String getTimestamp() {
@@ -64,12 +63,31 @@ public class SystemMetrics {
         this.diskUsage = diskUsage;
     }
 
-    public SystemMetrics(String id, String timestamp, String server, double cpuUsage, double memoryUsage, double diskUsage) {
-        this.id = id;
+    private String server;
+
+    public SystemMetricsDocument( String id, String timestamp, String server, double cpuUsage, double memoryUsage, double diskUsage) {
         this.timestamp = timestamp;
+        this.id = id;
         this.server = server;
         this.cpuUsage = cpuUsage;
         this.memoryUsage = memoryUsage;
         this.diskUsage = diskUsage;
     }
+    private double cpuUsage;
+    private double memoryUsage;
+    private double diskUsage;
+
+
+    public static SystemMetricsDocument from(SystemMetrics metrics) {
+        SystemMetricsDocument doc = new SystemMetricsDocument();
+        doc.setId(metrics.getId());
+        doc.setCpuUsage(metrics.getCpuUsage());
+        doc.setServer(metrics.getServer());
+        doc.setTimestamp(metrics.getTimestamp());
+        doc.setMemoryUsage(metrics.getMemoryUsage());
+        doc.setDiskUsage(metrics.getDiskUsage());
+        return doc;
+    }
+
+    // getters and setters
 }

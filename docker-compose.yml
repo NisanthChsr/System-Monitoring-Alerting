@@ -18,6 +18,12 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     depends_on:
       - zookeeper
+    healthcheck:
+      test: [ "CMD", "kafka-topics.sh", "--bootstrap-server", "localhost:9093", "--list" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
@@ -32,6 +38,12 @@ services:
       - "9200:9200"
       - "9300:9300"
     restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail http://localhost:9200/_cluster/health || exit 1" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
 
   system-monitor:
     build:
@@ -57,6 +69,9 @@ services:
       SPRING_ELASTICSEARCH_SSL_VERIFICATION_MODE: none
       SPRING_ELASTICSEARCH_URIS: http://elasticsearch:9200
     depends_on:
-      - system-monitor
-      - kafka
-      - elasticsearch
+      system-monitor:
+        condition: service_started
+      kafka:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy

@@ -1,7 +1,7 @@
 package com.monitoring.log_storing.controller;
 
 import com.monitoring.log_storing.LogService;
-import com.monitoring.log_storing.entity.SystemMetrics;
+import com.monitoring.log_storing.entity.SystemMetricsDocument;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ public class LogController {
     }
 
     @GetMapping
-    public List<SystemMetrics> findAll() {
+    public List<SystemMetricsDocument> findAll() {
         return logService.findAll();
     }
 }

@@ -10,6 +10,16 @@ package com.monitoring.shared_resource.shared;
 public class SystemMetrics {
     private String timestamp;
 
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public SystemMetrics() {
     }
 
@@ -55,14 +65,14 @@ public class SystemMetrics {
 
     private String server;
 
-    public SystemMetrics(String timestamp, String server, double cpuUsage, double memoryUsage, double diskUsage) {
+    public SystemMetrics( String id, String timestamp, String server, double cpuUsage, double memoryUsage, double diskUsage) {
         this.timestamp = timestamp;
+        this.id = id;
         this.server = server;
         this.cpuUsage = cpuUsage;
         this.memoryUsage = memoryUsage;
         this.diskUsage = diskUsage;
     }
-
     private double cpuUsage;
     private double memoryUsage;
     private double diskUsage;

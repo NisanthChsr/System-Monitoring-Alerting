@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.time.Instant;
+import java.util.UUID;
 
 @Service
 public class SystemMetricsService {
@@ -37,6 +38,7 @@ public class SystemMetricsService {
         double diskUsage = ((double) (totalDiskSpace - freeDiskSpace) / totalDiskSpace) * 100;
 
         SystemMetrics metrics = new SystemMetrics(
+                UUID.randomUUID().toString(),
                 Instant.now().toString(),
                 "server-1",
                 oneMinuteLoad,
@@ -63,6 +65,7 @@ public class SystemMetricsService {
         double diskUsage = ((double) (totalDiskSpace - freeDiskSpace) / totalDiskSpace) * 100;
 
         return new SystemMetrics(
+                UUID.randomUUID().toString(),
                 Instant.now().toString(),
                 "server-1",
                 oneMinuteLoad,
